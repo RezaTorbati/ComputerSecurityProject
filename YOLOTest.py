@@ -17,11 +17,13 @@ yolo.summary()
 #yolo.inference(media_path="road.mp4", is_image=False)
 
 preference = cv2.CAP_V4L2
+deviceLocation = "/dev/video0"
 if platform.system()=='Windows':
     preference = cv2.CAP_DSHOW
+    deviceLocation = 0
 
 yolo.inference(
-    "/dev/video0",
+    deviceLocation,
     is_image=False,
     cv_apiPreference=preference,    
     cv_frame_size=(640, 480),    

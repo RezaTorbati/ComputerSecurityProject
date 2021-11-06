@@ -34,11 +34,13 @@ for r in results:
 
 '''
 preference = cv2.CAP_V4L2
+deviceLocation = "/dev/video0"
 if platform.system()=='Windows':
     preference = cv2.CAP_DSHOW
+    deviceLocation = 0
 
-test = yolo.inference(
-    "/dev/video0",
+yolo.inference(
+    deviceLocation,
     is_image=False,
     cv_apiPreference=preference,    
     cv_frame_size=(640, 480),    

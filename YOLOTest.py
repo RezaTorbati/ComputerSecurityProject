@@ -1,4 +1,5 @@
 import cv2
+import platform
 
 from yolov4.tf import YOLOv4
 
@@ -15,10 +16,14 @@ yolo.summary()
 #yolo.inference(media_path="kite.jpg")
 #yolo.inference(media_path="road.mp4", is_image=False)
 
+preference = cv2.CAP_V4L2
+if platform.system()=='Windows':
+    preference = cv2.CAP_DSHOW
+
 yolo.inference(
     "/dev/video0",
     is_image=False,
-    cv_apiPreference=cv2.CAP_V4L2,    
+    cv_apiPreference=preference,    
     cv_frame_size=(640, 480),    
     cv_fourcc="YUYV",
 )

@@ -1,2 +1,4 @@
 *.weights
 __pycache__/
+train2017/
+val2017/

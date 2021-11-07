@@ -15,9 +15,9 @@ yolo.load_weights("modelData/yolov4.weights", weights_type="yolo")
 yolo.summary(summary_type="yolo")
 yolo.summary()
 
-im = np.asarray(Image.open('images/WorkingAdversaries/stopSignsBall.png').convert("RGB"))
+im = np.asarray(Image.open('images/imageSet/Adversaries/kiteToaster2.jpg').convert("RGB"))
 
-results = gaussianTest(yolo, im)#, writeName='images/GaussianResults/streetSticker.jpeg')
+results = gaussianTest(yolo, im, writeName='images/GaussianResults/kiteToaster2.jpg')
 print(results)
 '''
 results = yolo.predict(im, .25) #.25 is standard

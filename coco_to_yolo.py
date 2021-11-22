@@ -70,8 +70,33 @@ class ConvertCOCOToYOLO:
         
         check_set = set()
 
+        # These shenanigans were done to account for APRICOT's image filenames, to put back to normal just use img_id:
         # Retrieve data
+        imgfile = ''
         for i in range(len(data[annotation_key])):
+            if i in range(0, 38):
+                imgfile = f'frs4_{i}'
+                if i == 4 or i == 9 or i == 32:
+                    imgfile = f'frs4_{i+1}'
+
+            elif i in range(38, 49):
+                imgfile = f'frs10_{i - 38}'
+                if i == 38 + 2:
+                    imgfile = f'frs10_{i - 38+1}'
+
+            elif i in range(49, 84):
+                imgfile = f'rrc3_{i - 49}'
+
+            elif i in range(84, 97):
+                imgfile = f'rrc6_{i - 84}'
+
+            elif i in range(97, 131):
+                imgfile = f'sms2_{i - 97}'
+                if i == 97 + 15 or i == 97 + 28:
+                    imgfile = f'sms2_{i - 97+1}'
+
+            elif i in range(131, 144):
+                imgfile = f'sms8_{i - 131}'
 
             # Get required data
             image_id = f'{data[annotation_key][i][img_id]}'
@@ -81,9 +106,9 @@ class ConvertCOCOToYOLO:
 
             # Retrieve image.
             if self.img_folder == None:
-                image_path = f'{image_id}.jpg'
+                image_path = f'{imgfile}.jpg'
             else:
-                image_path = f'./{self.img_folder}/{image_id}.jpg'
+                image_path = f'{self.img_folder}\\{imgfile}.jpg'
 
 
             # Convert the data
@@ -112,8 +137,7 @@ class ConvertCOCOToYOLO:
 
 
 # To run in as a class
-ConvertCOCOToYOLO(img_folder='../val2017',json_path='../annotations/instances_val2017.json').convert()
-
+ConvertCOCOToYOLO(img_folder='D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\APRICOT\\Images\\dev', json_path='D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\APRICOT\\Annotations\\apricot_dev_coco_annotations.json').convert()
 
 
 

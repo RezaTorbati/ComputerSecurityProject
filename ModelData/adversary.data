@@ -1,0 +1,5 @@
+classes = 81
+train = data/coco/trainvalno5k.txt
+valid = data/coco/5k.txt
+names = data/adversary.names
+backup = ../backup

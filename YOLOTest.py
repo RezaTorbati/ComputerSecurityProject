@@ -7,11 +7,11 @@ from PIL import Image
 
 yolo = YOLOv4()
 
-yolo.config.parse_names("modelData/coco.names")
-yolo.config.parse_cfg("modelData/yolov4.cfg")
+yolo.config.parse_names("ModelData/adversary.names")
+yolo.config.parse_cfg("ModelData/adversary.cfg")
 
 yolo.make_model()
-yolo.load_weights("modelData/yolov4.weights", weights_type="yolo")
+yolo.load_weights("ModelData/adversary_last.weights", weights_type="yolo")
 yolo.summary(summary_type="yolo")
 yolo.summary()
 

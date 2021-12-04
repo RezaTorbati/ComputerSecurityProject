@@ -8,4 +8,6 @@ APRICOT/
 darknet/
 .idea/
 Adversaries/
+images/
+labels/
 val2014/

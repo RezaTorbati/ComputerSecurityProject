@@ -1,0 +1,24 @@
+Results for 0.1 variance on Gaussian Noise
+Total true positives: 36051
+Total adversaries: 501
+Total No Noise False Negatives: 14278
+Total No Noise Adversaries Detected: 133
+Total Noisy False Negatives: 14306
+Total Noisy Adversaries Detected: 133
+
+Results for 0.4 variance on Gaussian Noise
+Total true positives: 36051
+Total adversaries: 501
+Total No Noise False Negatives: 14278
+Total No Noise Adversaries Detected: 133
+Total Noisy False Negatives: 14348
+Total Noisy Adversaries Detected: 131
+
+Results for 0.45 variance on Gaussian Noise
+Total true positives: 36051
+Total adversaries: 501
+Total No Noise False Negatives: 14278
+Total No Noise Adversaries Detected: 133
+Total Noisy False Negatives: 14338
+Total Noisy Adversaries Detected: 134
+

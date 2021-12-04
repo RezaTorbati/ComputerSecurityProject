@@ -1,50 +1,50 @@
-import os
+# Maximum Mean Discrepancy function MMD() courtesy of: https://www.kaggle.com/onurtunali/maximum-mean-discrepancy
+
 import glob
 import cv2
 import torch
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy.stats import multivariate_normal
-from scipy.stats import dirichlet
-from torch.distributions.multivariate_normal import MultivariateNormal
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class StatisticalDetection:
 
     def __init__(self, folder1path, folder2path):
-        self.adv_hist = np.zeros([256, 1], dtype=float)
-        self.clean_hist = np.zeros([256, 1], dtype=float)
+        self.hist_1 = np.zeros([256, 1], dtype=float)
+        self.hist_2 = np.zeros([256, 1], dtype=float)
         # Read all the images in as grayscale
         filenames1 = glob.glob(folder1path)
         filenames1.sort()
         filenames2 = glob.glob(folder2path)
         filenames2.sort()
-        self.adv_images = [cv2.imread(imgfile, 0) for imgfile in filenames1]
-        self.clean_images = [cv2.imread(imgfile, 0) for imgfile in filenames2]
+        self.images_1 = [cv2.imread(imgfile, 0) for imgfile in filenames1]
+        self.images_2 = [cv2.imread(imgfile, 0) for imgfile in filenames2]
         # Init ORB object
         self.orb = cv2.ORB_create(nfeatures=100000, scoreType=cv2.ORB_FAST_SCORE)
 
     def findDistributions(self):
 
-        # Perform ORB feature extraction (adv_images and clean_images are same length)
-        for i in range(len(self.adv_images)):
-            # Adv image first
-            keypoints = self.orb.detect(self.adv_images[i], None)
-            keypoints, _ = self.orb.compute(self.adv_images[i], keypoints)
-            kp_img = cv2.drawKeypoints(self.adv_images[i], keypoints, None, color=(0, 255, 0), flags=0)
+        # Perform ORB feature extraction (images_1 and images_2 are same length)
+        for i in range(len(self.images_1)):
+            # Image from set 1 first
+            keypoints = self.orb.detect(self.images_1[i], None)
+            keypoints, _ = self.orb.compute(self.images_1[i], keypoints)
+            kp_img = cv2.drawKeypoints(self.images_1[i], keypoints, None, color=(0, 255, 0), flags=0)
             hist = cv2.calcHist([kp_img], [0], None, [256], [0, 256])
-            np.add(self.adv_hist, hist, out=self.adv_hist)
-            # Repeat for clean image
-            keypoints = self.orb.detect(self.clean_images[i], None)
-            keypoints, _ = self.orb.compute(self.clean_images[i], keypoints)
-            kp_img = cv2.drawKeypoints(self.clean_images[i], keypoints, None, color=(0, 255, 0), flags=0)
+            np.add(self.hist_1, hist, out=self.hist_1)
+            # Repeat for image from second set
+            keypoints = self.orb.detect(self.images_2[i], None)
+            keypoints, _ = self.orb.compute(self.images_2[i], keypoints)
+            kp_img = cv2.drawKeypoints(self.images_2[i], keypoints, None, color=(0, 255, 0), flags=0)
             hist = cv2.calcHist([kp_img], [0], None, [256], [0, 256])
-            np.add(self.clean_hist, hist, out=self.clean_hist)
-
-        plt.plot(self.adv_hist)
+            np.add(self.hist_2, hist, out=self.hist_2)
+            
+        '''
+        plt.plot(self.hist_1)
         plt.show()
-        plt.plot(self.clean_hist)
+        plt.plot(self.hist_2)
         plt.show()
+        '''
 
     def MMD(self, x, y, kernel):
         """Emprical maximum mean discrepancy. The lower the result
@@ -87,21 +87,18 @@ class StatisticalDetection:
 
     def calcMMD(self):
 
-        m = 100  # sample size
-        x_mean = torch.mean(torch.from_numpy(self.adv_hist))
-        y_mean = torch.mean(torch.from_numpy(self.clean_hist))
-        x_cov = 2 * torch.eye(256)  # IMPORTANT: Covariance matrices must be positive definite
-        y_cov = 3 * torch.eye(256) - 1
-
-        x = torch.from_numpy(self.adv_hist)
-        y = torch.from_numpy(self.clean_hist)
+        m = 25  # sample size
+        self.hist_1 = torch.from_numpy(self.hist_1)
+        self.hist_2 = torch.from_numpy(self.hist_2)
+        x = self.hist_1[torch.randperm(len(self.hist_1))[:m]]
+        y = self.hist_2[torch.randperm(len(self.hist_2))[:m]]
 
         result = self.MMD(x, y, kernel='multiscale')
 
         print(f"MMD result of X and Y is {result.item()}")
 
 
-stats = StatisticalDetection('D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\Adversaries\\Images\\dev\\*.jpg',
-                     'D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\val2014\\dev\\*.jpg')
+stats = StatisticalDetection('D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\Adversaries\\Images\\test\\*.jpg',
+                     'D:\\Coding\\PyCharmProjects\\ComputerSecurityProject\\val2014\\test\\*.jpg')
 stats.findDistributions()
 stats.calcMMD()

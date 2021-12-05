@@ -1,0 +1,5 @@
+classes = 81
+train = data/coco/4400.txt
+valid = data/coco/1100.txt
+names = adversary.names
+backup = /mydrive/yolov4/training

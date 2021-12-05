@@ -16,6 +16,8 @@ yolo.load_weights("ModelData/yolov4.weights", weights_type="yolo")
 yolo.summary(summary_type="yolo")
 yolo.summary()
 
+gaussianTest(yolo, 'adv_test (91).jpg', writeName='')
+'''
 count = 0
 variances = [.1, .4, .45]
 writer = open('results.txt', 'w')
@@ -69,4 +71,5 @@ for v in variances:
     writer.write("Total Noisy Adversaries Detected: "+ str(totalNoisyAdversary)+"\n\n")
     
 writer.close()
+'''
 

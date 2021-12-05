@@ -16,6 +16,9 @@ To accomplish this, we implimented three methods: the Gaussian noise test, a sta
 4. Alternatively, create a folder called "images" in the Gaussian folder and put however many images of interest in it. Then remove the comments at lines 20 and 74 of analyze.py and then run `python analyze.py`. This will analyze all images in the folder and print out the aggregate results. For this to return anything useful, you must also have a folder called "labels" with YOLO style labelings for each image.
 
 ## Running the Statistical Test
+1. After installing the dependencies for the Gaussian test, you'll just need to ` pip install torch ` 
+2. StatisticalDetection.py expects two paths with folders of images. APRICOT can be downloaded [here](https://apricot.mitre.org/download/) and COCO can be downloaded [here](https://cocodataset.org/#download)
+3. Once you have the image folders, replace lines 101 & 102 with one or both of the folder paths. Then, just run `python StatisticalDetection.py` to obtain the MMD value.
 
 ## Running the Custom Version of YOLO
 1. Run the following in CustomModel: <br>

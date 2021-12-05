@@ -19,7 +19,7 @@ def gaussianTest(yolo, imName, prob=.25, writeName='', showImage = True, var=.25
     noNoiseFN, noNoiseFP, truePositives, trueAdversaries = getResults(noNoiseResults, label)
     noisyFN, noisyFP, truePositives, trueAdversaries = getResults(noisyResults, label)
 
-    if verbose:
+    if verbose and not (truePositives == 0 and trueAdversaries==0):
         print('True positives: ', truePositives)
         print('True adversaries: ', trueAdversaries)
         

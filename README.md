@@ -10,15 +10,17 @@ To accomplish this, we implimented three methods: the Gaussian noise test, a sta
     python3 -m pip install yolov4
 ```
 2. Download the weights [here](https://drive.google.com/file/d/15P4cYyZ2Sd876HKAEWSmeRdFl_j-0upi/view) and put them in Gaussian/ModelData
-3. Modify line 19 of Gaussian/analyze.py to analyze the image of choice and then run it
-4. Alternatively, create a folder called images in the Gaussian folder, put many images of interest in it and remove the comments at lines 20 and 74. This will analyze all images in the folder and print out the aggregate results.
+3. Modify line 19 of Gaussian/analyze.py to analyze the image of choice and then run it with <br>
+    'python analyze.py'
+   For this image to be analyzed, there must be a corresponding YOLO label file, such as the given "examples.txt"
+4. Alternatively, create a folder called "images" in the Gaussian folder and put many images of interest in it and remove the comments at lines 20 and 74. This will analyze all images in the folder and print out the aggregate results. For this to return anything useful, you MUST also have a folder called "labels" with YOLO style labelings for each image.
 
 ## Running the Statistical Test
 
 ## Running the Custom Version of YOLO
 1. Run the following in CustomModel: <br>
 ```
-    !git clone https://github.com/AlexeyAB/darknet
+    git clone https://github.com/AlexeyAB/darknet
     cd darknet
     make
 ```

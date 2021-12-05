@@ -16,7 +16,7 @@ yolo.load_weights("ModelData/yolov4.weights", weights_type="yolo")
 yolo.summary(summary_type="yolo")
 yolo.summary()
 
-gaussianTest(yolo, 'adv_test (91).jpg', writeName='')
+gaussianTest(yolo, 'example.jpg', writeName='')
 '''
 count = 0
 variances = [.1, .4, .45]

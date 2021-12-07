@@ -18,7 +18,7 @@ To accomplish this, we implimented three methods: the Gaussian noise test, a sta
 ## Running the Statistical Test
 1. After installing the dependencies for the Gaussian test, you'll just need to ` pip install torch ` 
 2. StatisticalDetection.py expects two paths with folders of images. APRICOT can be downloaded [here](https://apricot.mitre.org/download/) and COCO can be downloaded [here](https://cocodataset.org/#download)
-3. Once you have the image folders, replace lines 101 & 102 with one or both of the folder paths. Then, just run `python StatisticalDetection.py` to obtain the MMD value.
+3. Once you have the image folders, replace lines 101 & 102 with one or both of the folder paths. Then, just run `python StatsDetect/StatisticalDetection.py` to obtain the MMD value.
 
 ## Running the Custom Version of YOLO
 1. Run the following in CustomModel: <br>

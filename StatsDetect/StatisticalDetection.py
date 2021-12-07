@@ -32,19 +32,24 @@ class StatisticalDetection:
             kp_img = cv2.drawKeypoints(self.images_1[i], keypoints, None, color=(0, 255, 0), flags=0)
             hist = cv2.calcHist([kp_img], [0], None, [256], [0, 256])
             np.add(self.hist_1, hist, out=self.hist_1)
+            #plt.imshow(kp_img)
+            #plt.show()
             # Repeat for image from second set
             keypoints = self.orb.detect(self.images_2[i], None)
             keypoints, _ = self.orb.compute(self.images_2[i], keypoints)
             kp_img = cv2.drawKeypoints(self.images_2[i], keypoints, None, color=(0, 255, 0), flags=0)
             hist = cv2.calcHist([kp_img], [0], None, [256], [0, 256])
             np.add(self.hist_2, hist, out=self.hist_2)
-            
-        '''
+
+
         plt.plot(self.hist_1)
+        plt.xlabel("Pixel Intensity")
+        plt.ylabel("Count")
         plt.show()
         plt.plot(self.hist_2)
+        plt.xlabel("Pixel Intensity")
+        plt.ylabel("Count")
         plt.show()
-        '''
 
     def MMD(self, x, y, kernel):
         """Emprical maximum mean discrepancy. The lower the result
